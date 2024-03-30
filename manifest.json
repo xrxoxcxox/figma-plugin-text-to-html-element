@@ -2,7 +2,7 @@
   "name": "text-to-html-element",
   "id": "1355774258876737329",
   "api": "1.0.0",
-  "main": "code.js",
+  "main": "dist/code.js",
   "capabilities": [],
   "enableProposedApi": false,
   "editorType": [

@@ -1,5 +1,5 @@
 // This plugin creates 5 rectangles on the screen.
-const numberOfRectangles = 5
+const numberOfRectangles = 10
 
 // This file holds the main code for plugins. Code in this file has access to
 // the *figma document* via the figma global object.
@@ -10,7 +10,7 @@ const nodes: SceneNode[] = [];
 for (let i = 0; i < numberOfRectangles; i++) {
   const rect = figma.createRectangle();
   rect.x = i * 150;
-  rect.fills = [{type: 'SOLID', color: {r: 1, g: 0.5, b: 0}}];
+  rect.fills = [{type: 'SOLID', color: {r: 1, g: 0.5, b: 1}}];
   figma.currentPage.appendChild(rect);
   nodes.push(rect);
 }
