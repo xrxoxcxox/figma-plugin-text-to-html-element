@@ -4,12 +4,7 @@
     "outDir": "./dist",
     "strict": true,
     "target": "es6",
-    "typeRoots": [
-      "./node_modules/@types",
-      "./node_modules/@figma"
-    ],
+    "typeRoots": ["./node_modules/@types", "./node_modules/@figma"]
   },
-  "include": [
-    "./src/**/*"
-  ]
+  "include": ["./src/**/*"]
 }
