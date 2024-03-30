@@ -1,22 +1,44 @@
-// This plugin creates 5 rectangles on the screen.
-const numberOfRectangles = 10;
-
-// This file holds the main code for plugins. Code in this file has access to
-// the *figma document* via the figma global object.
-// You can access browser APIs in the <script> tag inside "ui.html" which has a
-// full browser environment (See https://www.figma.com/plugin-docs/how-plugins-run).
-
-const nodes: SceneNode[] = [];
-for (let i = 0; i < numberOfRectangles; i++) {
-  const rect = figma.createRectangle();
-  rect.x = i * 150;
-  rect.fills = [{ type: "SOLID", color: { r: 1, g: 0.5, b: 1 } }];
-  figma.currentPage.appendChild(rect);
-  nodes.push(rect);
+function determineTag(layerName: string): string {
+  const tagMatch = layerName.match(/^(h[1-6])/);
+  return tagMatch ? tagMatch[0] : "p";
 }
-figma.currentPage.selection = nodes;
-figma.viewport.scrollAndZoomIntoView(nodes);
 
-// Make sure to close the plugin when you're done. Otherwise the plugin will
-// keep running, which shows the cancel button at the bottom of the screen.
-figma.closePlugin();
+function findTextNodes(node: SceneNode): string[] {
+  let texts: string[] = [];
+  if (node.type === "TEXT") {
+    const tagName = determineTag(node.name);
+    texts.push(`<${tagName}>${node.characters}</${tagName}>`);
+  } else if ("children" in node) {
+    node.children.forEach((child: SceneNode) => {
+      texts = texts.concat(findTextNodes(child));
+    });
+  }
+  return texts;
+}
+
+function updateText() {
+  if (figma.currentPage.selection.length > 0) {
+    let allTexts: string[] = [];
+
+    figma.currentPage.selection.forEach((node) => {
+      allTexts = allTexts.concat(findTextNodes(node));
+    });
+
+    const htmlTextToDisplay = allTexts.join("\n");
+    figma.ui.postMessage({ type: "htmlTextToDisplay", text: htmlTextToDisplay });
+  } else {
+    figma.ui.postMessage({ type: "noText", text: "Select a frame" });
+  }
+}
+
+figma.showUI(__html__, { width: 400, height: 480 });
+
+updateText();
+
+figma.on("selectionchange", updateText);
+
+figma.ui.onmessage = msg => {
+  if (msg.type === "copy") {
+    figma.notify(`Text copied to clipboard`);
+  }
+}
