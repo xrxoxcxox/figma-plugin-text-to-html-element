@@ -1,0 +1,35 @@
+{
+  "name": "text-to-html-element",
+  "dependencies": {
+    "@create-figma-plugin/ui": "^3.1.0",
+    "@create-figma-plugin/utilities": "^3.1.0",
+    "preact": ">=10",
+    "prismjs": "1.29.0",
+    "react-simple-code-editor": "0.13.1"
+  },
+  "devDependencies": {
+    "@create-figma-plugin/build": "^3.1.0",
+    "@create-figma-plugin/tsconfig": "^3.1.0",
+    "@figma/eslint-plugin-figma-plugins": "^0.15.0",
+    "@figma/plugin-typings": "1.82.0",
+    "@types/prismjs": "1.26.3",
+    "@typescript-eslint/eslint-plugin": "^7.4.0",
+    "eslint": "^8.57.0",
+    "eslint-config-preact": "^1.3.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.2.5",
+    "typescript": ">=4"
+  },
+  "scripts": {
+    "build": "build-figma-plugin --typecheck --minify",
+    "format": "prettier --write .",
+    "lint": "eslint --ext .ts,.tsx && prettier --check .",
+    "watch": "build-figma-plugin --typecheck --watch"
+  },
+  "figma-plugin": {
+    "id": "1355774258876737329",
+    "name": "Text to HTML element",
+    "main": "src/main.ts",
+    "ui": "src/ui.tsx"
+  }
+}

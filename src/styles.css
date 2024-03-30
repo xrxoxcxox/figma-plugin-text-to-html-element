@@ -1,0 +1,22 @@
+.displayArea {
+  border-radius: 0.25rem;
+  border-style: solid;
+  border-width: 1px;
+  line-height: 1.5;
+  max-height: 20rem;
+  overflow: scroll;
+  padding: 0.75rem;
+  white-space: pre-wrap;
+}
+
+.isTextSelected {
+  background-color: var(--figma-color-bg);
+  border-color: var(--figma-color-border);
+  color: var(--figma-color-text);
+}
+
+.isNotTextSelected {
+  background-color: var(--figma-color-bg-disabled);
+  border-color: transparent;
+  color: var(--figma-color-text-disabled);
+}
