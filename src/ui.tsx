@@ -10,7 +10,7 @@ import { emit } from "@create-figma-plugin/utilities";
 import { h } from "preact";
 import { useEffect, useState } from "preact/hooks";
 import styles from "./styles.css";
-import type { CopyTextHandler } from "./types";
+import type { CopyCodeHandler, UiReadyHandler } from "./types";
 
 function Plugin() {
   const [selectedText, setSelectedText] = useState<string>("");
@@ -24,11 +24,12 @@ function Plugin() {
     area.select();
     document.execCommand("copy");
     document.body.removeChild(area);
-    // parent.postMessage({ pluginMessage: { type: "textCopy" } }, "*");
-    emit<CopyTextHandler>('COPY_TEXT', 'Text copied to clipboard');
+    emit<CopyCodeHandler>("COPY_CODE", "Text copied to clipboard");
   }
 
   useEffect(() => {
+    emit<UiReadyHandler>("UI_READY");
+
     const handleMessage = (event: {
       data: { pluginMessage: { text: string; isTextSelected: boolean } };
     }) => {
@@ -58,7 +59,7 @@ function Plugin() {
       <VerticalSpace space="medium" />
       {selectedText ? (
         <Button fullWidth onClick={handleClick}>
-          Copy text
+          Copy code
         </Button>
       ) : null}
       <VerticalSpace space="small" />

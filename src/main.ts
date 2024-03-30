@@ -1,5 +1,5 @@
 import { on, showUI } from "@create-figma-plugin/utilities";
-import type { CopyTextHandler } from "./types";
+import type { CopyCodeHandler, UiReadyHandler } from "./types";
 
 function determineTag(layerName: string): string {
   const tagMatch = layerName.match(/^(h[1-6])/);
@@ -35,10 +35,15 @@ function extractAndSendMessage() {
 }
 
 export default function () {
+  showUI({ height: 416, width: 400 });
+
+  on<UiReadyHandler>("UI_READY", extractAndSendMessage);
+
   figma.on("selectionchange", extractAndSendMessage);
+
   function handleClick(data: string) {
     figma.notify(data);
+    figma.closePlugin();
   }
-  on<CopyTextHandler>('COPY_TEXT', handleClick)
-  showUI({ height: 416, width: 400 });
+  on<CopyCodeHandler>("COPY_CODE", handleClick);
 }
