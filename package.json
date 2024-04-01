@@ -1,5 +1,5 @@
 {
-  "name": "text-to-html-element",
+  "name": "figma-plugin-text-to-html-element",
   "dependencies": {
     "@create-figma-plugin/ui": "^3.1.0",
     "@create-figma-plugin/utilities": "^3.1.0",
